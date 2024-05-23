@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AuctionHouseApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuctionHouseApp.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <div class="container">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="/Listings">
+                        <i class="fa fa-list"></i> Active Listings
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-item nav-link" href="/Listings/Create">
+                            <i class="fa fa-plus-circle"></i> Create Listing
+                        </a>
+                        <a class="nav-item nav-link" href="/Listings/MyListings">
+                            <i class="fa fa-user"></i> My Listings
+                        </a>
+                        <a class="nav-item nav-link" href="/Listings/MyBids">
+                            <i class="fa fa-gavel"></i> My Bids
+                        </a>
+                    }
+                </div>
+                <div class="navbar-nav mx-auto">
+                    <form class="d-flex" asp-controller="Listings" asp-action="Index" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Search Listings" aria-label="Search" name="searchString">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </form>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - AuctionHouseApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

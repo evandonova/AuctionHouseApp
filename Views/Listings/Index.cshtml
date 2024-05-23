@@ -1,0 +1,47 @@
+﻿@model AuctionHouseApp.Models.ListingsViewModel
+
+@{
+    ViewData["Title"] = "Active Listings";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">@ViewData["Title"]</h1>
+    @if (!Model.Listings.Any())
+    {
+        <p class="text-muted">No Active Listings</p>
+    }
+    else
+    {
+        foreach (var listing in Model.Listings)
+        {
+            <div class="row mb-3 bg-light shadow rounded">
+                <div class="col-md-4">
+                    <img src="@Url.Content("~/Images/" + listing.ImagePath)" alt="Listing Image" class="img-fluid rounded-start" style="max-width:400px; max-height:400px;">
+                </div>
+                <div class="col-md-8 d-flex flex-column justify-content-between p-3">
+                    <div>
+                        <h3>
+                            <a asp-action="Details" asp-controller="Listings" asp-route-id="@listing.ListingId" class="text-decoration-none">@listing.Title</a>
+                        </h3>
+                        <p>@listing.Description</p>
+                    </div>
+                    <div>
+                        <p><strong>Price:</strong> @listing.Price.ToString("0.00")</p>
+                        <p><strong>Seller:</strong> @listing.User?.Email</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">Previous</a>
+        </li>
+        <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</nav>
